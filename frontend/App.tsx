@@ -1,5 +1,7 @@
 function App() {
-  return <div className="w-screen h-screen p-2 bg-amber-100">App</div>;
+  return (
+    <div className="w-screen h-screen overflow-x-hidden overflow-y-scroll no-scrollbar p-1"></div>
+  );
 }
 
 export default App;
