@@ -15,11 +15,7 @@ export const gameController = {
       // verifying if token does exists and represent a valid game state
       const previousGameSate = jwtVerify.verifyToken(token ?? "");
       if (previousGameSate) {
-        const { status, submittedWords, attemptLeft, createdAt } =
-          previousGameSate;
-        return res
-          .status(200)
-          .json({ game: { status, submittedWords, attemptLeft, createdAt } });
+        return res.status(200).json({ game: previousGameSate });
       }
 
       // generating a new game state
