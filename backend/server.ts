@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import "./config/dotenv.ts";
-import game from "./routes/game.route.ts"
-import check from "./routes/check.route.ts"
+import game from "./routes/game.route.ts";
+import postWord from "./routes/postWord.route.ts";
 
 const PORT = process.env.PORT || 8080;
 
@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use("/game", game);
 
-app.use('/check', check)
+app.use("/word", postWord);
 
 app.listen(PORT, () => {
   console.log("App is listening on : " + PORT);
