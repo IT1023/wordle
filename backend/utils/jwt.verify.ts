@@ -28,8 +28,7 @@ export const jwtVerify = {
       if (createdAt !== new Date().toDateString()) return undefined;
 
       return { status, attemptLeft, words, createdAt };
-    } catch (err) {
-      console.log(err);
+    } catch {
       return undefined;
     }
   },
