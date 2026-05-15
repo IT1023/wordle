@@ -13,7 +13,7 @@ export default function Language() {
     <select
       name="languages"
       id="languages"
-      className="border-2 px-3 py-1 rounded-md cursor-pointer"
+      className="h-full border-2 px-3 py-1 rounded-md cursor-pointer dark:bg-black"
       onChange={(e) => i18n.changeLanguage(e.target.value as TLanguages)}
       value={i18n.language}
     >
