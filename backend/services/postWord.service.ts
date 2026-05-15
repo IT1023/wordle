@@ -26,7 +26,6 @@ export const postWordService = {
     const word = await client.get(today);
     // cache hit
     if (word) return word;
-
     // generating a new word of the day
     const connection = db();
     const [maxRow] = await connection.query<RowDataPacket[]>(
@@ -35,15 +34,16 @@ export const postWordService = {
     if (!maxRow.length) return "";
 
     const { offset } = maxRow[0];
+    const rand = Math.floor(Math.random() * offset);
 
     const [rows] = await connection.query<RowDataPacket[]>(
       `SELECT words FROM wordlist limit 1 offset ?`,
-      [offset],
+      [rand],
     );
     if (!rows.length) return "";
     const { words } = rows[0];
     // saving to cache
-    await client.set(today, words);
+    await client.set(today, words, "EX", 60 * 60 * 24);
     return words;
   },
   // build a map from word of the day, with each char as a key and its count and positions as values
