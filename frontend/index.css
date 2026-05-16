@@ -10,3 +10,7 @@
     scrollbar-width: none;
   }
 }
+
+.dark {
+  background-color: black;
+}

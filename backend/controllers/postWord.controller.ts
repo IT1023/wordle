@@ -45,7 +45,7 @@ export const postWordController = {
     ).length;
 
     if (isWordPreviouslySubmitted)
-      return res.status(422).json({
+      return res.status(409).json({
         code: "previouslySubmitted",
         message: "This word has been previously submitted",
       });
