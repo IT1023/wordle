@@ -68,7 +68,7 @@ export const postWordService = {
     // initialize all positions as incorrect
     const res: Case["state"] = Array.from({ length: 5 }, () => "incorrect");
 
-    // first traverse for correct and in correct positions chars
+    // traverse for correct letter and in correct positions chars, then checking for misplaced characters
     word.split("").forEach((char, index) => {
       if (wordOfTheDayChars.has(char)) {
         const { count, idx } = wordOfTheDayChars.get(char)!;
@@ -79,15 +79,7 @@ export const postWordService = {
             count: count - 1,
             idx,
           });
-        }
-      }
-    });
-
-    // second iterations for misplaced char
-    word.split("").forEach((char, index) => {
-      if (wordOfTheDayChars.has(char)) {
-        const { count, idx } = wordOfTheDayChars.get(char)!;
-        if (count) {
+        } else if (!!count && !idx.has(index)) {
           res[index] = "misplaced";
           wordOfTheDayChars.set(char, {
             count: count - 1,

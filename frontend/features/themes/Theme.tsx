@@ -42,9 +42,14 @@ export default function Theme() {
   return (
     <div
       onClick={changeTheme}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (e.key !== "Enter") return;
+        changeTheme();
+      }}
       role="button"
       aria-label={t(`theme.${currentTheme}`)}
       className="w-fit h-full flex items-center cursor-pointer hover:scale-110 transition-all duration-400"
+      tabIndex={0}
     >
       {currentTheme === "dark" ? (
         <FontAwesomeIcon icon={faSun} fontSize={18} />
