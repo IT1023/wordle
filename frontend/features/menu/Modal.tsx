@@ -33,11 +33,11 @@ export default function Modal({
       >
         {trigger}
       </div>
-      {isOpen && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
             ref={modalRef}
-            className="absolute top-0 left-0 min-w-100 h-screen bg-[#f7f7f7] dark:bg-[#1B1B1B]"
+            className="w-full overflow-hidden rounded-r-2xl absolute top-0 left-0 max-w-100 h-screen bg-[#f7f7f7] dark:bg-[#1B1B1B]"
             initial={{ opacity: 0, x: "-100%" }}
             animate={{ opacity: 1, x: "0" }}
             exit={{ opacity: 0, x: "-100%" }}
@@ -45,8 +45,8 @@ export default function Modal({
           >
             {modal}
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import type { GameState, PostWord } from "../../../shared/types";
 import type { RootState } from "../../config/store";
 import { gameStateSchema, wordSchema } from "../../../shared/schemas";
@@ -112,12 +116,42 @@ const gameSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      .addCase(initiateGame.pending, () => {})
-      .addCase(initiateGame.rejected, () => {})
-      .addCase(initiateGame.fulfilled, () => {})
-      .addCase(postWord.pending, () => {})
-      .addCase(postWord.rejected, () => {})
-      .addCase(postWord.fulfilled, () => {}),
+      .addCase(initiateGame.pending, (state) => {
+        state.initializationStatus = "loading";
+        state.error = null;
+      })
+      .addCase(
+        initiateGame.rejected,
+        (state, action: PayloadAction<Reject | undefined>) => {
+          state.initializationStatus = "failure";
+          state.error = action.payload ?? "SYSTEM";
+        },
+      )
+      .addCase(
+        initiateGame.fulfilled,
+        (state, action: PayloadAction<GameState>) => {
+          state.initializationStatus = "success";
+          state.gameState = action.payload;
+        },
+      )
+      .addCase(postWord.pending, (state) => {
+        state.postwordStatus = "loading";
+        state.error = null;
+      })
+      .addCase(
+        postWord.rejected,
+        (state, action: PayloadAction<Reject | undefined>) => {
+          state.postwordStatus = "failure";
+          state.error = action.payload ?? "SYSTEM";
+        },
+      )
+      .addCase(
+        postWord.fulfilled,
+        (state, action: PayloadAction<GameState>) => {
+          state.postwordStatus = "success";
+          state.gameState = action.payload;
+        },
+      ),
 });
 
 /*------------------------------------------- Selectors -------------------------------------------*/
