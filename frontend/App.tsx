@@ -15,7 +15,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="w-screen h-screen overflow-x-hidden overflow-y-scroll no-scrollbar">
+    <div className="w-screen h-screen overflow-hidde flex flex-col">
       <Header />
       <Game />
     </div>

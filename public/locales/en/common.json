@@ -3,5 +3,13 @@
   "theme": {
     "light": "change theme to dark",
     "dark": "change theme to light"
+  },
+  "errors": {
+    "ABORT": "The guess was aborted.",
+    "SYSTEM": "Something went wrong. Please try again.",
+    "DOWN": "The game server is currently unavailable.",
+    "MISMATCH": "The guess format is invalid.",
+    "INVALID": "That is not a valid English word.",
+    "UNPROCESSABLE": "You already tried that word."
   }
 }

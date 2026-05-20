@@ -3,6 +3,7 @@ import cors from "cors";
 import "./config/dotenv.ts";
 import game from "./routes/game.route.ts";
 import postWord from "./routes/postWord.route.ts";
+import reset from "./routes/reset.route.ts";
 
 const PORT = process.env.PORT || 8080;
 
@@ -18,6 +19,8 @@ app.use(
 app.use("/game", game);
 
 app.use("/word", postWord);
+
+app.use("/reset-game", reset);
 
 app.listen(PORT, () => {
   console.log("App is listening on : " + PORT);

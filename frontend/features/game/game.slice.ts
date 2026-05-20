@@ -3,7 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import type { GameState, PostWord } from "../../../shared/types";
+import type { GameState } from "../../../shared/types";
 import type { RootState } from "../../config/store";
 import { gameStateSchema, wordSchema } from "../../../shared/schemas";
 import z from "zod";
@@ -12,22 +12,26 @@ const responseSchema = z.object({
   game: gameStateSchema,
 });
 
+const base: string = import.meta.env.VITE_BASE_API_URL;
+
 /*------------------------------------------- State -------------------------------------------*/
 type Status = "idle" | "loading" | "failure" | "success";
 
-type Reject =
+export type Reject =
   | "ABORT"
   | "SYSTEM"
   | "DOWN"
   | "MISMATCH"
   | "INVALID"
-  | "UNPROCESSABLE";
+  | "UNPROCESSABLE"
+  | "RESOLVED";
 
 type SliceState = {
   initializationStatus: Status;
   postwordStatus: Status;
   error: Reject | null;
   gameState: GameState | null;
+  activeWord: string[];
 };
 
 const initialState: SliceState = {
@@ -35,6 +39,7 @@ const initialState: SliceState = {
   postwordStatus: "idle",
   error: null,
   gameState: null,
+  activeWord: [],
 };
 
 /*------------------------------------------- Thunks -------------------------------------------*/
@@ -45,7 +50,6 @@ export const initiateGame = createAsyncThunk<
   { rejectValue: Reject }
 >("initiate-game", async (_, { signal, rejectWithValue }) => {
   try {
-    const base: string = import.meta.env.VITE_BASE_API_URL;
     const url: URL = new URL("/game", base);
     const options: RequestInit = {
       method: "GET",
@@ -71,20 +75,36 @@ export const initiateGame = createAsyncThunk<
 
 export const postWord = createAsyncThunk<
   GameState,
-  PostWord,
+  void,
   { rejectValue: Reject }
->("post-word", async (_args, { signal, rejectWithValue }) => {
+>("post-word", async (_, { signal, rejectWithValue, getState }) => {
   try {
-    const argsParsed = wordSchema.safeParse(_args);
+    const state = getState() as RootState;
+    // checking if user tries to submit another word when game has already been resolved
+    const { gameState, activeWord } = state.game;
+    const { status } = gameState ?? {
+      status: "running",
+    };
+    if (status === "won" || status === "failed")
+      return rejectWithValue("RESOLVED");
+
+    if (activeWord.length < 5) return rejectWithValue("INVALID");
+
+    const postWord = { word: activeWord.join("") };
+
+    // building request resource
+    const argsParsed = wordSchema.safeParse(postWord);
     if (!argsParsed.success) return rejectWithValue("MISMATCH");
     const { word } = argsParsed.data;
-    const base: string = import.meta.env.VITE_BASE_API_URL;
     const url: URL = new URL("/word", base);
     const options: RequestInit = {
       method: "POST",
       signal,
       credentials: "include",
       body: JSON.stringify({ word }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
     const response = await fetch(url, options);
     if (!response.ok) {
@@ -106,6 +126,33 @@ export const postWord = createAsyncThunk<
   }
 });
 
+export const resetGame = createAsyncThunk<
+  GameState,
+  void,
+  { rejectValue: Reject }
+>("reset/game", async (_, { signal, rejectWithValue }) => {
+  try {
+    const url: URL = new URL("/reset-game", base);
+    const options: RequestInit = {
+      method: "GET",
+      signal,
+      credentials: "include",
+    };
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      return rejectWithValue("DOWN");
+    }
+    const data = await response.json();
+    const parsed = responseSchema.safeParse(data);
+    if (!parsed.success) return rejectWithValue("MISMATCH");
+    return parsed.data.game;
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError")
+      return rejectWithValue("ABORT");
+    return rejectWithValue("SYSTEM");
+  }
+});
+
 /*------------------------------------------- Slice -------------------------------------------*/
 
 const gameSlice = createSlice({
@@ -113,6 +160,16 @@ const gameSlice = createSlice({
   initialState,
   reducers: {
     optimisticReset: () => initialState,
+    addLetter: (state, action: PayloadAction<string>) => {
+      if (state.activeWord.length >= 5) return;
+      state.activeWord.push(action.payload);
+    },
+    popLetter: (state) => {
+      state.activeWord = state.activeWord.slice(0, -1);
+    },
+    resetLetter: (state) => {
+      state.activeWord = [];
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -151,6 +208,24 @@ const gameSlice = createSlice({
           state.postwordStatus = "success";
           state.gameState = action.payload;
         },
+      )
+      .addCase(resetGame.pending, (state) => {
+        state.initializationStatus = "loading";
+        state.error = null;
+      })
+      .addCase(
+        resetGame.rejected,
+        (state, action: PayloadAction<Reject | undefined>) => {
+          state.initializationStatus = "failure";
+          state.error = action.payload || "SYSTEM";
+        },
+      )
+      .addCase(
+        resetGame.fulfilled,
+        (state, action: PayloadAction<GameState>) => {
+          state.initializationStatus = "success";
+          state.gameState = action.payload;
+        },
       ),
 });
 
@@ -165,5 +240,8 @@ export const selectError = (state: RootState) => state.game.error;
 
 export const selectGameState = (state: RootState) => state.game.gameState;
 
+export const selectActiveWord = (state: RootState) => state.game.activeWord;
+
 export default gameSlice.reducer;
-export const { optimisticReset } = gameSlice.actions;
+export const { optimisticReset, addLetter, popLetter, resetLetter } =
+  gameSlice.actions;
