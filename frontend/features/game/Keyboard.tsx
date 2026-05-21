@@ -8,6 +8,17 @@ export default function Keyboard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const onTrigger = (letter: string) => {
+    if (letter === "←") {
+      dispatch(popLetter());
+    } else if (letter === "↩") {
+      dispatch(postWord());
+      dispatch(resetLetter());
+    } else {
+      dispatch(addLetter(letter));
+    }
+  };
+
   return (
     <div
       className="w-full flex flex-col gap-2 items-center"
@@ -21,16 +32,7 @@ export default function Keyboard() {
                 <button
                   key={letter}
                   className="w-10 md:w-14 lg:w-16 text-md md:text-xl lg:text-2xl cursor-pointer bg-gray-300 dark:bg-gray-600 font-mono font-bold aspect-square border flex justify-center items-center border-gray-300 dark:border-gray-700 capitalize transition-all duration-500 ease-in-out active:scale-150"
-                  onClick={() => {
-                    if (letter === "←") {
-                      dispatch(popLetter());
-                    } else if (letter === "↩") {
-                      dispatch(postWord());
-                      dispatch(resetLetter());
-                    } else {
-                      dispatch(addLetter(letter));
-                    }
-                  }}
+                  onClick={() => onTrigger(letter)}
                 >
                   {letter}
                 </button>

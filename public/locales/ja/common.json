@@ -11,5 +11,7 @@
     "MISMATCH": "入力形式が正しくありません。",
     "INVALID": "その単語は英語の単語として認識されません。",
     "UNPROCESSABLE": "その単語は既に入力済みです。"
-  }
+  },
+  "gameTitle": "単語を当てよう",
+  "attemptsLeft": "残り試行回数"
 }

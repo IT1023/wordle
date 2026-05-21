@@ -1,9 +1,14 @@
 import { useSelector } from "react-redux";
 import Case from "./Case";
-import { selectActiveWord, selectGameState } from "./game.slice";
+import {
+  selectActiveWord,
+  selectGameState,
+  selectPostWordStatus,
+} from "./game.slice";
 import { useEffect } from "react";
 
 export default function Board() {
+  const postStatus = useSelector(selectPostWordStatus);
   const activeWord = useSelector(selectActiveWord);
   const gameState = useSelector(selectGameState);
   const { words, status, attemptLeft } = gameState || {
@@ -38,7 +43,14 @@ export default function Board() {
       {status === "running" && (
         <div className="flex gap-2">
           {Array.from({ length: 5 }).map((_, idx) => {
-            return <Case key={idx} letter={activeWord[idx]} />;
+            return postStatus === "loading" ? (
+              <div
+                key={idx}
+                className="letter transition-all duration-500 ease-in-out aspect-square w-15 bg-gray-200 dark:bg-gray-500"
+              ></div>
+            ) : (
+              <Case key={idx} letter={activeWord[idx]} />
+            );
           })}
         </div>
       )}

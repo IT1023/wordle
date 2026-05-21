@@ -11,5 +11,7 @@
     "MISMATCH": "The guess format is invalid.",
     "INVALID": "That is not a valid English word.",
     "UNPROCESSABLE": "You already tried that word."
-  }
+  },
+  "gameTitle": "Guess the Word",
+  "attemptsLeft": "Attempts Left"
 }
