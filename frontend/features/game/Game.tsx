@@ -16,6 +16,7 @@ import Loader from "../../shared/ui/Loader";
 import Title from "./Title";
 import { useAppDispatch } from "../../config/redux.helper";
 import { useEffect } from "react";
+import { addTempToast } from "../toast/toast.helper";
 
 export default function Game() {
   const status = useSelector(selectInitializationStatus);
@@ -41,6 +42,12 @@ export default function Game() {
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error !== "INVALID" && error !== "UNPROCESSABLE") return;
+    const type = error === "INVALID" ? "warning" : "info";
+    dispatch(addTempToast({ error, type }));
+  }, [error, dispatch]);
 
   return (
     <div

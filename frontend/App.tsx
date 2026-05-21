@@ -3,6 +3,7 @@ import Header from "./layouts/Header";
 import { initiateGame } from "./features/game/game.slice";
 import { useEffect } from "react";
 import Game from "./features/game/Game";
+import Toast from "./features/toast/Toast";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ function App() {
     <div className="w-screen h-screen overflow-hidde flex flex-col">
       <Header />
       <Game />
+      <Toast />
     </div>
   );
 }
