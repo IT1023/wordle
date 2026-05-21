@@ -23,6 +23,8 @@ export default function Board() {
     if (status === "won") console.log("Won");
   }, [status]);
 
+  useEffect(() => {}, [postStatus]);
+
   return (
     <div className="w-full flex flex-col p-4 items-center gap-2">
       {words.map((w) => {

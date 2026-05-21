@@ -2,6 +2,7 @@ import type { TLanguages } from "../../config/i18n";
 
 export const numbersMap: Record<TLanguages, Record<number, string>> = {
   en: {
+    0: "0",
     1: "1",
     2: "2",
     3: "3",
@@ -10,6 +11,7 @@ export const numbersMap: Record<TLanguages, Record<number, string>> = {
     6: "6",
   },
   ja: {
+    "0": "ゼロ",
     "1": "一",
     "2": "二",
     "3": "三",
