@@ -13,5 +13,9 @@
     "UNPROCESSABLE": "You already tried that word."
   },
   "gameTitle": "Guess the Word",
-  "attemptsLeft": "Attempts Left"
+  "attemptsLeft": "Attempts Left",
+  "gameOver": {
+    "won": "🎉 Congratulations! You guessed the word correctly and won the game!",
+    "failed": "❌ Game Over! You’ve used all your attempts. Better luck tomorrow!"
+  }
 }

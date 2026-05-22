@@ -5,7 +5,6 @@ import {
   selectGameState,
   selectPostWordStatus,
 } from "./game.slice";
-import { useEffect } from "react";
 
 export default function Board() {
   const postStatus = useSelector(selectPostWordStatus);
@@ -16,14 +15,6 @@ export default function Board() {
     status: "idle",
     attemptLeft: 1,
   };
-
-  useEffect(() => {
-    if (status === "idle" || status === "running") return;
-    if (status === "failed") console.log("failed");
-    if (status === "won") console.log("Won");
-  }, [status]);
-
-  useEffect(() => {}, [postStatus]);
 
   return (
     <div className="w-full flex flex-col p-4 items-center gap-2">
@@ -51,7 +42,7 @@ export default function Board() {
                 className="letter transition-all duration-500 ease-in-out aspect-square w-15 bg-gray-200 dark:bg-gray-500"
               ></div>
             ) : (
-              <Case key={idx} letter={activeWord[idx]} />
+              <Case key={idx} letter={activeWord[idx]} active={true} />
             );
           })}
         </div>
