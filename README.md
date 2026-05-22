@@ -12,6 +12,8 @@ It demonstrates:
 
 - React component-based UI
 - Redux state management
+- tailwindcss styling
+- i18n for multi-languages support
 - Node.js backend API (Redis for word of the day caching)
 - Separation of frontend and backend logic
 - Game state handling and validation
@@ -36,6 +38,21 @@ It demonstrates:
 ### Tools
 
 - pnpm
+
+** install dependencies
+```
+pnpm install
+```
+
+** for frontend
+```
+pnpm run dev
+```
+
+** for backend
+```
+pnpm run server
+```
 
 ---
 
