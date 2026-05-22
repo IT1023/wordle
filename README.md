@@ -2,7 +2,7 @@
 
 A recreation of the popular Wordle game built with a full-stack JavaScript setup using React, Redux, and Node.js.
 
-[Live Demo]: (https://wordle-serverless.vercel.app/)
+Live Demo: https://wordle-serverless.vercel.app/
 
 ---
 
