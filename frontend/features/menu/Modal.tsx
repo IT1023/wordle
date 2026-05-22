@@ -4,13 +4,13 @@ import { AnimatePresence, motion } from "motion/react";
 
 interface ModalProps {
   trigger: React.ReactNode;
-  modal: React.ReactNode;
+  component: React.ReactNode;
   modalKey?: string;
 }
 
 export default function Modal({
   trigger,
-  modal,
+  component,
   modalKey = "openMenu",
 }: ModalProps) {
   const { isOpen, modalRef, triggerRef, openModal } = useModal();
@@ -43,7 +43,7 @@ export default function Modal({
             exit={{ opacity: 0, x: "-100%" }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {modal}
+            {component}
           </motion.div>
         )}
       </AnimatePresence>
