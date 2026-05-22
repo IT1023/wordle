@@ -17,5 +17,13 @@
   "gameOver": {
     "won": "🎉 おめでとうございます！単語を正解してゲームに勝ちました！",
     "failed": "❌ ゲームオーバー！すべての挑戦回数を使い切りました。また挑戦してください！"
+  },
+  "menu": {
+    "signature": "IT1023 によって ❤️ を込めて作られました",
+    "resetGame": "ゲームをリセット",
+    "sourceCode": "ソースコード",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "zenn": "Zenn"
   }
 }

@@ -17,5 +17,13 @@
   "gameOver": {
     "won": "🎉 Congratulations! You guessed the word correctly and won the game!",
     "failed": "❌ Game Over! You’ve used all your attempts. Better luck tomorrow!"
+  },
+  "menu": {
+    "signature": "Made With ❤️ By IT1023",
+    "resetGame": "Reset Game",
+    "sourceCode": "Source Code",
+    "github": "Github",
+    "linkedin": "Linkedin",
+    "zenn": "Zenn"
   }
 }

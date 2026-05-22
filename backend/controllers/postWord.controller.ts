@@ -36,9 +36,10 @@ export const postWordController = {
     const { word } = parsed.data;
     const isValidWord = await postWordService.isValidWord(word);
     if (!isValidWord)
-      return res
-        .status(422)
-        .json({ code: "notValid", message: "Not a valid word" });
+      return res.status(422).json({
+        code: "notValid",
+        message: "That is not a valid English word.",
+      });
 
     const isWordPreviouslySubmitted = !!previousGameState.words.filter(
       (w) => w.word === word,
