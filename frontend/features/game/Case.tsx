@@ -5,6 +5,7 @@ type LetterState = GameState["words"][number]["state"][number];
 interface CaseProps {
   letter: string;
   state?: LetterState;
+  active?: boolean;
 }
 
 const letterColors: Record<LetterState, string> = {
@@ -13,10 +14,14 @@ const letterColors: Record<LetterState, string> = {
   incorrect: "text-black dark:text-white",
 };
 
-export default function Case({ letter, state = "incorrect" }: CaseProps) {
+export default function Case({
+  letter,
+  state = "incorrect",
+  active = false,
+}: CaseProps) {
   return (
     <div
-      className={`letter transition-all duration-500 ease-in-out aspect-square w-15 border border-gray-300 dark:border-gray-600 ${letterColors[state]} flex justify-center items-center capitalize font-mono font-bold text-xl`}
+      className={`letter transition-all duration-500 ease-in-out aspect-square w-15 border ${active ? "border-gray-500 dark:border-gray-300" : "border-gray-300 dark:border-gray-600"} ${letterColors[state]} flex justify-center items-center capitalize font-mono font-bold text-xl`}
     >
       {letter}
     </div>

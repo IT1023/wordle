@@ -6,7 +6,6 @@ import {
   addLetter,
   popLetter,
   postWord,
-  resetGame,
   resetLetter,
   selectError,
   selectInitializationStatus,
@@ -64,12 +63,6 @@ export default function Game() {
         </div>
       )}
       {status === "failure" && error && <Error error={error} />}
-      <button
-        className="border p-4 cursor-pointer"
-        onClick={() => dispatch(resetGame())}
-      >
-        Reset Game
-      </button>
     </div>
   );
 }

@@ -1,12 +1,24 @@
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../config/redux.helper";
-import { addLetter, popLetter, postWord, resetLetter } from "./game.slice";
+import {
+  addLetter,
+  popLetter,
+  postWord,
+  resetLetter,
+  selectGameState,
+} from "./game.slice";
+import { useSelector } from "react-redux";
+import GameOver from "./GameOver";
 
 const Layers: string[] = ["azertyuiop←", "qsdfghjklm↩", "wxcvbn"];
 
 export default function Keyboard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { status } = useSelector(selectGameState) || { status: "idle" };
+
+  if (status === "failed" || status === "won")
+    return <GameOver status={status} />;
 
   const onTrigger = (letter: string) => {
     if (letter === "←") {
