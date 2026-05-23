@@ -26,12 +26,15 @@ export type Reject =
   | "UNPROCESSABLE"
   | "RESOLVED";
 
+export type LetterState = GameState["words"][number]["state"][number] | "idle";
+
 type SliceState = {
   initializationStatus: Status;
   postwordStatus: Status;
   error: Reject | null;
   gameState: GameState | null;
   activeWord: string[];
+  submittedLetters: Record<string, LetterState>;
 };
 
 const initialState: SliceState = {
@@ -40,6 +43,7 @@ const initialState: SliceState = {
   error: null,
   gameState: null,
   activeWord: [],
+  submittedLetters: {},
 };
 
 /*------------------------------------------- Thunks -------------------------------------------*/
@@ -205,6 +209,13 @@ const gameSlice = createSlice({
       .addCase(
         postWord.fulfilled,
         (state, action: PayloadAction<GameState>) => {
+          const { words } = action.payload;
+          const lastWord = words[words.length - 1];
+          for (let i = 0; i < lastWord.word.length; i++) {
+            const char = lastWord.word[i];
+            if (state.submittedLetters[char] === "correct") continue;
+            state.submittedLetters[char] = lastWord.state[i];
+          }
           state.postwordStatus = "success";
           state.gameState = action.payload;
         },
@@ -225,6 +236,7 @@ const gameSlice = createSlice({
         (state, action: PayloadAction<GameState>) => {
           state.initializationStatus = "success";
           state.gameState = action.payload;
+          state.submittedLetters = {};
         },
       ),
 });
@@ -241,6 +253,9 @@ export const selectError = (state: RootState) => state.game.error;
 export const selectGameState = (state: RootState) => state.game.gameState;
 
 export const selectActiveWord = (state: RootState) => state.game.activeWord;
+
+export const selectSubmittedLetters = (state: RootState) =>
+  state.game.submittedLetters;
 
 export default gameSlice.reducer;
 export const { optimisticReset, addLetter, popLetter, resetLetter } =

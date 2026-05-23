@@ -7,7 +7,7 @@ export default function Menu() {
   const dispatch = useAppDispatch();
   return (
     <nav className="w-full h-full rounded-2xl p-4 text-dark dark:text-white flex flex-col gap-2 justify-between">
-      <ul className="w-full p-4 flex flex-col gap-2 items-center [&>li]:w-[75%] [&>li]:p-2 [&>li]:bg-gray-700 [&>li]:rounded-md">
+      <ul className="w-full p-4 flex flex-col gap-2 items-center text-white [&>li]:w-[75%] [&>li]:p-2 [&>li]:bg-gray-700 [&>li]:rounded-md">
         <li className="flex justify-center [:hover]:bg-gray-800 transition-all duration-150 ease-in-out">
           <button
             className="w-full h-full cursor-pointer font-mono font-bold"
