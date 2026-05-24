@@ -84,8 +84,8 @@ export const postWord = createAsyncThunk<
 >("post-word", async (_, { signal, rejectWithValue, getState }) => {
   try {
     const state = getState() as RootState;
-    // checking if user tries to submit another word when game has already been resolved
     const { gameState, activeWord } = state.game;
+    // checking if user tries to submit another word when game has already been resolved
     const { status } = gameState ?? {
       status: "running",
     };
@@ -163,6 +163,7 @@ const gameSlice = createSlice({
   name: "game/slice",
   initialState,
   reducers: {
+    // optimistic is for debugging only, as the game state is preserved through token in cookie
     optimisticReset: () => initialState,
     addLetter: (state, action: PayloadAction<string>) => {
       if (state.activeWord.length >= 5) return;

@@ -16,7 +16,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="w-screen h-screen overflow-hidde flex flex-col">
+    <div className="w-screen h-screen overflow-hidden flex flex-col">
       <Header />
       <Game />
       <Toast />

@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import Case from "./Case";
 import {
   selectActiveWord,
   selectGameState,
   selectPostWordStatus,
 } from "./game.slice";
+import Case from "./Case";
 
 export default function Board() {
   const postStatus = useSelector(selectPostWordStatus);
@@ -13,7 +13,7 @@ export default function Board() {
   const { words, status, attemptLeft } = gameState || {
     words: [],
     status: "idle",
-    attemptLeft: 1,
+    attemptLeft: 6,
   };
 
   return (

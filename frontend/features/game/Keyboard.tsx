@@ -23,8 +23,8 @@ const Layers: string[] = ["azertyuiop←", "qsdfghjklm↩", "wxcvbn"];
 
 export default function Keyboard() {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { status } = useSelector(selectGameState) || { status: "idle" };
+  const dispatch = useAppDispatch();
   const submittedLetters = useSelector(selectSubmittedLetters);
 
   if (status === "failed" || status === "won")

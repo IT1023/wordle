@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
+import Theme from "../features/themes/Theme";
 import Language from "../features/languages/Language";
+import Modal from "../features/menu/Modal";
 import Burger from "../features/menu/Burger";
 import Menu from "../features/menu/Menu";
-import Modal from "../features/menu/Modal";
-import Theme from "../features/themes/Theme";
 
 export default function Header() {
   const { t } = useTranslation();

@@ -36,7 +36,7 @@ export default function useModal(): UseModalReturn {
       closeModal();
     };
     /* ----------------------------- Focusable Elements ----------------------------- */
-    const FOCUSABLE_SELECTOR = [
+    const FOCUSABLE_ELEMENTS = [
       "a[href]",
       "button:not([disabled])",
       'input:not([disabled]):not([type="hidden"])',
@@ -45,7 +45,7 @@ export default function useModal(): UseModalReturn {
       '[tabindex]:not([tabindex="-1"])',
     ].join(",");
     const focusables = Array.from(
-      modal.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      modal.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS),
     ).filter(
       (el) => !el.hasAttribute("disabled") && !el.getAttribute("aria-hidden"),
     );
@@ -54,8 +54,7 @@ export default function useModal(): UseModalReturn {
     focusables[0]?.focus();
     /* ----------------------------- Focus trap ----------------------------- */
     const handleFocusTrap = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-      if (focusables.length < 2) return;
+      if (e.key !== "Tab" || focusables.length < 2) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
       const active = document.activeElement as HTMLElement | null;

@@ -1,17 +1,17 @@
 import { useTranslation } from "react-i18next";
-import useModal from "./useModal";
 import { AnimatePresence, motion } from "motion/react";
+import useModal from "./useModal";
 
 interface ModalProps {
   trigger: React.ReactNode;
   component: React.ReactNode;
-  modalKey?: string;
+  modalLabel?: string;
 }
 
 export default function Modal({
   trigger,
   component,
-  modalKey = "openMenu",
+  modalLabel = "openMenu",
 }: ModalProps) {
   const { isOpen, modalRef, triggerRef, openModal } = useModal();
   const { t } = useTranslation("");
@@ -29,7 +29,8 @@ export default function Modal({
         onClick={openModal}
         onKeyDown={onEnterKey}
         tabIndex={0}
-        aria-label={t(`${modalKey}`)}
+        role="button"
+        aria-label={t(`${modalLabel}`)}
       >
         {trigger}
       </div>

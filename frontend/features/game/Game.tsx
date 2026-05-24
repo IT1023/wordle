@@ -1,7 +1,4 @@
 import { useSelector } from "react-redux";
-import Attempts from "./Attempts";
-import Board from "./Board";
-import Keyboard from "./Keyboard";
 import {
   addLetter,
   popLetter,
@@ -10,12 +7,15 @@ import {
   selectError,
   selectInitializationStatus,
 } from "./game.slice";
-import Error from "../../shared/ui/Error";
-import Loader from "../../shared/ui/Loader";
-import Title from "./Title";
 import { useAppDispatch } from "../../config/redux.helper";
 import { useEffect } from "react";
 import { addTempToast } from "../toast/toast.helper";
+import Attempts from "./Attempts";
+import Board from "./Board";
+import Keyboard from "./Keyboard";
+import Error from "../../shared/ui/Error";
+import Loader from "../../shared/ui/Loader";
+import Title from "./Title";
 
 export default function Game() {
   const status = useSelector(selectInitializationStatus);
@@ -26,7 +26,6 @@ export default function Game() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Backspace") {
         dispatch(popLetter());
-        return;
       }
       if (e.key === "Enter") {
         dispatch(postWord());
