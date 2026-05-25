@@ -3,6 +3,6 @@ import { resetController } from "../controllers/reset.controller.ts";
 
 const router = Router();
 
-router.get("/", resetController.resetGame);
+router.post("/", resetController.resetGame);
 
 export default router;
