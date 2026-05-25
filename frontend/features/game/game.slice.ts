@@ -138,7 +138,7 @@ export const resetGame = createAsyncThunk<
   try {
     const url: URL = new URL("/reset-game", base);
     const options: RequestInit = {
-      method: "GET",
+      method: "POST",
       signal,
       credentials: "include",
     };
