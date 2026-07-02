@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-interface UseModalReturn {
+export interface UseModalReturn {
   isOpen: boolean;
   triggerRef: RefObject<HTMLDivElement | null>;
   modalRef: RefObject<HTMLDivElement | null>;
