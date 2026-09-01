@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wordle-serverless.vercel.app/sitemap.xml

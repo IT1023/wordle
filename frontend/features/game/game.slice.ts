@@ -24,7 +24,8 @@ export type Reject =
   | "MISMATCH"
   | "INVALID"
   | "UNPROCESSABLE"
-  | "RESOLVED";
+  | "RESOLVED"
+  | "SHORT";
 
 export type LetterState = GameState["words"][number]["state"][number] | "idle";
 
@@ -92,7 +93,7 @@ export const postWord = createAsyncThunk<
     if (status === "won" || status === "failed")
       return rejectWithValue("RESOLVED");
 
-    if (activeWord.length < 5) return rejectWithValue("INVALID");
+    if (activeWord.length < 5) return rejectWithValue("SHORT");
 
     const postWord = { word: activeWord.join("") };
 

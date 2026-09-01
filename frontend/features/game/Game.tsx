@@ -42,7 +42,8 @@ export default function Game() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (error !== "INVALID" && error !== "UNPROCESSABLE") return;
+    if (error !== "INVALID" && error !== "UNPROCESSABLE" && error !== "SHORT")
+      return;
     const type = error === "INVALID" ? "warning" : "info";
     dispatch(addTempToast({ error, type }));
   }, [error, dispatch]);

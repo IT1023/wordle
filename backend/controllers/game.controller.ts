@@ -23,7 +23,7 @@ export const gameController = {
 
       // injecting the new game state into cookie
       res.cookie("token", jwtGenerate.generateToken(game), {
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000, // one day max age
         sameSite: "strict",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

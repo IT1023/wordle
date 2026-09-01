@@ -16,6 +16,7 @@ export default function Language() {
       className="h-full border-2 px-3 py-1 rounded-md cursor-pointer dark:bg-black"
       onChange={(e) => i18n.changeLanguage(e.target.value as TLanguages)}
       value={i18n.language}
+      aria-label={t("languages.switch")}
     >
       <option value="en">🇺🇸</option>
       <option value="ja">🇯🇵</option>
