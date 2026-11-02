@@ -43,7 +43,7 @@ export default function Keyboard() {
 
   return (
     <div
-      className="w-full flex flex-col gap-2 items-center"
+      className="w-full p-2 flex flex-col gap-2 items-center"
       aria-label={t("keyboard")}
     >
       {Layers.map((layer, idx) => {
@@ -54,7 +54,7 @@ export default function Keyboard() {
               return (
                 <button
                   key={letter}
-                  className={`w-10 md:w-14 lg:w-16 ${letterColors[state]} text-md md:text-xl lg:text-2xl cursor-pointer font-mono font-bold aspect-square border flex justify-center items-center border-gray-300 dark:border-gray-700 capitalize transition-all duration-500 ease-in-out active:scale-150`}
+                  className={`w-8 md:w-14 lg:w-16 ${letterColors[state]} text-md md:text-xl lg:text-2xl cursor-pointer font-mono font-bold aspect-square border flex justify-center items-center border-gray-300 dark:border-gray-700 capitalize transition-all duration-500 ease-in-out active:scale-150`}
                   onClick={() => onTrigger(letter)}
                 >
                   {letter}
